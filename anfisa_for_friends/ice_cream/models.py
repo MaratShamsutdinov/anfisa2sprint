@@ -6,7 +6,10 @@ from core.models import PublishedModel
 class Category(PublishedModel):
     title = models.CharField(max_length=256, verbose_name='Название')
     slug = models.SlugField(max_length=64, unique=True, verbose_name='Слаг')
-    output_order = models.PositiveSmallIntegerField(default=100, verbose_name='Порядок отображения')
+    output_order = models.PositiveSmallIntegerField(
+        default=100,
+        verbose_name='Порядок отображения'
+        )
 
     class Meta:
         verbose_name = 'объект «Категория»'
@@ -61,11 +64,17 @@ class IceCream(PublishedModel):
         verbose_name='Категория'
     )
     toppings = models.ManyToManyField(Topping, verbose_name='Топпинг')
+    price = models.DecimalField(max_digits=5, decimal_places=2)
     is_on_main = models.BooleanField(default=False, verbose_name='На главную')
+    output_order = models.PositiveSmallIntegerField(
+        default=100,
+        verbose_name='Порядок отображения'
+        )
 
     class Meta:
         verbose_name = 'объект «Мороженное»'
         verbose_name_plural = 'Мороженное'
+        ordering = ('output_order', 'title')
 
     def __str__(self):
         return self.title
